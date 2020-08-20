@@ -1,0 +1,11 @@
+debug:
+  version: 1.x
+  css:
+    theme:
+      assets/debug.css: {}
+  js:
+    assets/debug.js: {}
+  dependencies:
+    - core/jquery
+    - core/jquery.once
+    - core/drupal

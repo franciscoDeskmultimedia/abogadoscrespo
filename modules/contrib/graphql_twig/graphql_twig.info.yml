@@ -1,0 +1,15 @@
+name: GraphQL Twig
+type: module
+description: 'Render twig templates with graphql data.'
+package: GraphQL
+core: 8.x
+core_version_requirement: ^8 || ^9
+dependencies:
+  - graphql:graphql (< 4.0)
+  - graphql:graphql_core
+  - drupal:system (>= 8.6)
+
+# Information added by Drupal.org packaging script on 2020-01-27
+version: '8.x-1.0-beta15'
+project: 'graphql_twig'
+datestamp: 1580116694

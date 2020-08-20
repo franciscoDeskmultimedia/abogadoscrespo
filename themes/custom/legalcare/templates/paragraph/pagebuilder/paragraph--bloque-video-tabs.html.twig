@@ -1,0 +1,111 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display a paragraph.
+ *
+ * Available variables:
+ * - paragraph: Full paragraph entity.
+ *   Only method names starting with "get", "has", or "is" and a few common
+ *   methods such as "id", "label", and "bundle" are available. For example:
+ *   - paragraph.getCreatedTime() will return the paragraph creation timestamp.
+ *   - paragraph.id(): The paragraph ID.
+ *   - paragraph.bundle(): The type of the paragraph, for example, "image" or "text".
+ *   - paragraph.getOwnerId(): The user ID of the paragraph author.
+ *   See Drupal\paragraphs\Entity\Paragraph for a full list of public properties
+ *   and methods for the paragraph object.
+ * - content: All paragraph items. Use {{ content }} to print them all,
+ *   or print a subset such as {{ content.field_example }}. Use
+ *   {{ content|without('field_example') }} to temporarily suppress the printing
+ *   of a given child element.
+ * - attributes: HTML attributes for the containing element.
+ *   The attributes.class element may contain one or more of the following
+ *   classes:
+ *   - paragraphs: The current template type (also known as a "theming hook").
+ *   - paragraphs--type-[type]: The current paragraphs type. For example, if the paragraph is an
+ *     "Image" it would result in "paragraphs--type--image". Note that the machine
+ *     name will often be in a short form of the human readable label.
+ *   - paragraphs--view-mode--[view_mode]: The View Mode of the paragraph; for example, a
+ *     preview would result in: "paragraphs--view-mode--preview", and
+ *     default: "paragraphs--view-mode--default".
+ * - view_mode: View mode; for example, "preview" or "full".
+ * - logged_in: Flag for authenticated user status. Will be true when the
+ *   current user is a logged-in member.
+ * - is_admin: Flag for admin user status. Will be true when the current user
+ *   is an administrator.
+ *
+ * @see template_preprocess_paragraph()
+ *
+ * @ingroup themeable
+ */
+#}
+{%
+  set classes = [
+    'paragraph',
+    'paragraph--type--' ~ paragraph.bundle|clean_class,
+    view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
+    not paragraph.isPublished() ? 'paragraph--unpublished'
+  ]
+%}
+{% set BackgroundImage = file_url(content.field_imagen_de_fondo['#items'].entity.uri.value) %}
+{% block paragraph %}
+  
+    {% block content %}
+    <section class="ftco-section ftco-no-pt ftco-no-pb">
+    	<div class="container">
+    		<div class="row d-flex">
+    			<div class="col-md-6 d-flex">
+    				<div class="img img-video d-flex align-self-stretch align-items-center justify-content-center justify-content-md-end" style="background-image:url({{BackgroundImage}});">
+    					{% if content.field_url_video |render|striptags|trim %}
+						<a href="{{ content.field_url_video|render|striptags|trim }}" class="icon-video popup-vimeo d-flex justify-content-center align-items-center">
+    						<span class="icon-play"></span>
+    					</a>
+						{% endif %}
+    				</div>
+    			</div>
+    			<div class="col-md-6 pl-md-5">
+    				<div class="row justify-content-start pt-3 pb-3">
+		          <div class="col-md-12 heading-section ftco-animate">
+		          	<span class="subheading">{{ content.field_titulo|render|striptags|trim }}</span>
+		            <h2 class="mb-4">{{ content.field_subtitulo|render|striptags|trim }}</h2>
+		            <p>{{ content.field_descripcion|render|striptags|trim }}</p>
+		            <div class="tabulation-2 mt-4">
+									<ul class="nav nav-pills nav-fill d-md-flex d-block">
+									  <li class="nav-item mb-md-0 mb-2">
+									    <a class="nav-link active py-2" data-toggle="tab" href="#home1">{{ content.field_tab_titulo_1|render|striptags|trim }}</a>
+									  </li>
+									  <li class="nav-item px-lg-2 mb-md-0 mb-2">
+									    <a class="nav-link py-2" data-toggle="tab" href="#home2">{{ content.field_tab_titulo_2|render|striptags|trim }}</a>
+									  </li>
+									  <li class="nav-item">
+									    <a class="nav-link py-2 mb-md-0 mb-2" data-toggle="tab" href="#home3">{{ content.field_tab_titulo_3|render|striptags|trim }}</a>
+									  </li>
+									</ul>
+									<div class="tab-content bg-light rounded mt-2">
+									  <div class="tab-pane container p-0 active" id="home1">
+									  	<p class="text-justify">{{ content.field_tab_descripcion_1|render|striptags|trim }}</p>
+									  </div>
+									  <div class="tab-pane container p-0 fade" id="home2">
+									  	<p class="text-justify">{{ content.field_tab_descripcion_2|render|striptags|trim }}</p>
+									  </div>
+									  <div class="tab-pane container p-0 fade" id="home3">
+									  	<p class="text-justify">{{ content.field_tab_descripcion_3|render|striptags|trim }}</p>
+									  </div>
+									</div>
+								</div>
+		            <div class="years d-flex mt-4 mt-md-5">
+		            	<h4>
+							{% if content.field_contador |render|striptags|trim != 0 %}
+			            		<span class="number mr-2" data-number="{{ content.field_contador |render|striptags|trim }}">0</span>
+							{% endif %}
+				            <span>{{ content.field_texto_contador |render|striptags|trim}}</span>
+			            </h4>
+		            </div>
+		          </div>
+		        </div>
+	        </div>
+        </div>
+    	</div>
+    </section>
+    {% endblock %}
+  
+{% endblock paragraph %}
