@@ -51,7 +51,7 @@
   
     {% block content %}
       <p>
-        <img src="{{BackgroundImage}}" alt="" class="img-fluid">
+        <img src="{{BackgroundImage}}" alt="{{content.field_imagen_de_fondo['#items'].alt}}" class="img-fluid">
       </p>
     {% endblock %}
   

@@ -81,7 +81,8 @@
 <div id="lightgallery">
 {% for item in items %}
     <a href="{{file_url(item.content['#item'].entity.uri.value)}}" data-sub-html=".caption">
-        <img src="{{file_url(item.content['#item'].entity.uri.value)}}">
+        <img src="{{file_url(item.content['#item'].entity.uri.value)}}" alt='{{ item.content['#item'].alt }}'>
+        {# <p>test : {{ vardumper(file_url(item.content['#item'])) }}</p> #}
         <p class="caption">{{item.content['#item'].title}}</p>
     </a>
 {% endfor %}
